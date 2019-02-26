@@ -1,30 +1,7 @@
-<div id='actions'>
-  <ul>
-    <li>
-      <%= render "/refinery/admin/search", :url => refinery.news_admin_items_path %>
-    </li>
-    <li>
-      <%= link_to t('.create'), refinery.new_news_admin_item_path, :class => "add_icon" %>
-    </li>
-  </ul>
-</div>
-<div id='records'>
-  <% if searching? %>
-    <h2><%= t('refinery.admin.search.results_for', :query => params[:search]) %></h2>
-  <% end %>
-  <% if @items.any? %>
-    <%= will_paginate @items %>
-    <ul>
-      <%= render :partial => "item", :collection => @items %>
-    </ul>
-    <%= will_paginate @items %>
-  <% else %>
-    <p>
-      <% unless searching? %>
-        <strong><%= t('.no_items_yet') %></strong>
-      <% else %>
-        <%= t('refinery.admin.search.no_results') %>
-      <% end %>
-    </p>
-  <% end %>
-</div>
+<section id='records'>
+  <%= render 'records' %>
+</section>
+<aside id='actions'>
+  <%= render 'actions' %>
+</aside>
+<%= render '/refinery/admin/make_sortable', options: {tree: false} if !searching? and ::Refinery::News::Admin::ItemsController.sortable? and ::Refinery::News::Item.many? %>

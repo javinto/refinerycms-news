@@ -13,9 +13,10 @@ nl:
             delete: "Verwijder dit bericht permanent"
             published: Gepubliceerd op
           index:
-            create: "Maak een nieuw nieuwsbericht"
             item: Nieuws
             no_items_yet: 'Er zijn nog geen nieuwsberichten. Klik op "Maak een nieuw niewsbericht" om het eerste bericht te maken.'
+          actions:
+            create: "Maak een nieuw nieuwsbericht"
       shared:
         items:
           read_more: Lees meer

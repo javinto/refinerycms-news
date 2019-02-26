@@ -5,8 +5,9 @@ module Refinery
   module News
     class Item < Refinery::Core::BaseModel
       extend FriendlyId
+      friendly_id :title, :use => [:slugged, :globalize]
 
-      translates :title, :body, :slug
+      translates :title, :body, :slug, :source
 
       alias_attribute :content, :body
 
@@ -16,14 +17,7 @@ module Refinery
 
       acts_as_indexed :fields => [:title, :body]
 
-      default_scope proc { order "publish_date DESC" }
-
-      friendly_id :title, :use => [:slugged, :globalize]
-
-      # If title changes tell friendly_id to regenerate slug when saving record
-      def should_generate_new_friendly_id?
-        title_changed?
-      end
+      default_scope { order("publish_date DESC") }
 
       def not_published? # has the published date not yet arrived?
         publish_date > Time.now
@@ -61,7 +55,7 @@ module Refinery
         end
 
         def not_expired
-          where(arel_table[:expiration_date].eq(nil).or(arel_table[:expiration_date].gt(Time.now)))
+          where(expiration_date: nil).or(where("expiration_date > ?", Time.now))
         end
 
         def published

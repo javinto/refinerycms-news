@@ -1,0 +1,20 @@
+<ul>
+  <% if ::Refinery::News::Admin::ItemsController.searchable? %>
+    <li>
+      <%= render '/refinery/admin/search', :url => refinery.news_admin_items_path %>
+    </li>
+  <% end %>
+  <li>
+    <%= action_label :add, refinery.new_news_admin_item_path, t('.create') %>
+  </li>
+<% if !searching? && ::Refinery::News::Admin::ItemsController.sortable? && ::Refinery::News::Item.many? %>
+  <li>
+    <%= action_label :reorder,
+                     refinery.news_admin_items_path,
+                     t('.reorder', what:  "News"), id: 'reorder_action'%>
+    <%= action_label :reorder_done,
+                     refinery.news_admin_items_path,
+                      t('.reorder_done', what: "News"), id: 'reorder_action_done', class: 'hidden'%>
+  </li>
+<% end %>
+</ul>

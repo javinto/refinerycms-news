@@ -3,7 +3,10 @@ module Refinery
     module Admin
       class ItemsController < ::Refinery::AdminController
 
-        crudify :'refinery/news/item', :order => "publish_date DESC"
+        crudify :'refinery/news/item', 
+                sortable: false,
+                order: "publish_date DESC",
+                xhr_paging: true
 
         private
 
